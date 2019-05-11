@@ -1,14 +1,10 @@
-FROM alpine:3.1
-
-# Update
-RUN apk add --update python py-pip
-
-# Install app dependencies
-COPY requirements.txt ./
+FROM python:3
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /django-docker
+WORKDIR /django-docker
+ADD requirements.txt /django-docker/
 RUN pip install -r requirements.txt
-
-# Bundle app source
-COPY . .
-
+ADD . /django-docker/
+CMD ["python", "manage.py", "migrate"]
 EXPOSE  8000
 CMD ["python", "manage.py", "runserver", "127.0.0.1:8000"]
