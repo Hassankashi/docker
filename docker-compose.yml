@@ -3,9 +3,9 @@ version: '3'
 services:
   db:
     image: postgres
-  docker:
+  web:
     image: "mirandamoon/django:latest"
-    container_name: docker
+    container_name: web
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -13,4 +13,12 @@ services:
     ports:
       - "8000:8000"
     depends_on:
+      - migration
       - db
+    migration:
+      image: "mirandamoon/django:latest"
+      command: python manage.py migrate --noinput
+      volumes:
+        - .:/code
+      depends_on:
+        - db
