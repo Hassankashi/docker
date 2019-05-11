@@ -1,24 +1,22 @@
 version: '3'
 
 services:
-  db:
-    image: postgres
   web:
+    restart: always
     image: "mirandamoon/django:latest"
     container_name: web
     build: .
-    command: python manage.py runserver 127.0.0.1:8000
     volumes:
-      - .:/mycode
+      - .:/mycodes
     ports:
       - "8000:8000"
     depends_on:
-      - migration
-      - db
-  migration:
-    image: "mirandamoon/django:latest"
-    command: python manage.py migrate --noinput
+      - postgres
+  postgres:
+    restart: always
+    image: postgres:9.5.4
+    build: .
+    ports:
+      - 5432:5432
     volumes:
-      - .:/code
-    depends_on:
-      - db
+      - .:/mycodes
