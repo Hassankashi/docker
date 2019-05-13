@@ -1,9 +1,9 @@
-FROM python:3.6.7-alpine
+FROM python:3
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
-RUN git clone https://hassankashi:ff52ce9b8b06eeb24d5140dbbd9fd1f400094941@github.com/Hassankashi/docker.git --branch=master master
+#RUN git clone https://hassankashi:ff52ce9b8b06eeb24d5140dbbd9fd1f400094941@github.com/Hassankashi/docker.git --branch=master master
 RUN pip install -r requirements.txt
 ADD ./ /code/
 #CMD ["python", "mysite/manage.py", "runserver", "0.0.0.0:8001"]
